@@ -22,6 +22,16 @@ def fetch_latest_news():
             print(f"{i}.{article['title']}")
     else:
         print("Failed to fetch news.")
+def define_word(word):
+    url=f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+    response=requests.get(url)
+    if response.status_code==200:
+        data=response.json()
+        definition=data[0]['meanings'][0]['definitions'][0]['definition']
+        print(f"The definition of {word} is: {definition}")
+    else:
+        print("OOH Its a new word for me!")
+
 
 chat=True
 while chat:
@@ -58,6 +68,10 @@ while chat:
     elif user_msg in news_msgs:
         print("friday: Here are the latest news headlines:")
         fetch_latest_news()
+
+    elif "define" in user_msg:
+        word = user_msg.split("define")[-1].strip()
+        define_word(word)
 
     else:
         print("friday: I'm sorry, I can only respond to greetings at the moment.")
