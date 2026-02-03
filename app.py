@@ -8,6 +8,8 @@ time_msgs = ["what's the time?", "tell me the time", "current time", "time now"]
 greet_msgs = ["hi", "hello", "hey", "greetings", "what's up"]
 websites_msgs = ["google", "youtube", "facebook", "twitter"]
 news_msgs = ["give me the latest news", "news update", "latest news", "news headlines"]
+temp_msgs = ["temperature","temp","weather","temperature in","weather in"]
+
 
 API_KEY = os.getenv("NEWS_API")
 def fetch_latest_news():
@@ -31,6 +33,21 @@ def define_word(word):
         print(f"The definition of {word} is: {definition}")
     else:
         print("OOH Its a new word for me!")
+
+WEATHER_API_KEY = os.getenv("WEATHER_API")
+
+def weather(city):
+    url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
+    r = requests.get(url)
+
+    if r.status_code == 200:
+        data = r.json()
+        temp = data["current"]["temp_c"]
+        condition = data["current"]["condition"]["text"]
+        print(f"friday: {city.title()} is {temp}°C, {condition}")
+    else:
+        print("friday: Couldn't get weather.")
+
 
 
 chat=True
@@ -72,6 +89,11 @@ while chat:
     elif "define" in user_msg:
         word = user_msg.split("define")[-1].strip()
         define_word(word)
+
+    elif any(msg in user_msg for msg in temp_msgs):
+        city = user_msg.split()[-1] 
+        weather(city)
+
 
     else:
         print("friday: I'm sorry, I can only respond to greetings at the moment.")
