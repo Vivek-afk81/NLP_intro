@@ -27,5 +27,8 @@ Models can’t use raw text, so we tidy it up:
 We turn words into vectors:
 
 - **Bag of Words** – counts word frequency  
-- **TF-IDF** – adjusts weights so rare but important words matter more  
+- **TF-IDF** – adjusts weights so rare but important words matter more
+
+- **Word-to-vec** -Word2Vec is a neural network–based model that converts words into dense vector representations.  
+It captures semantic relationships between words using architectures like CBOW and Skip-Gram.
 
